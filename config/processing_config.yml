@@ -4,5 +4,5 @@ datastore:
 scheduler:
   interval: 5
 eventstores:
-  performance_url: http://storage-service:8091/monitoring/performance
-  errors_url: http://storage-service:8091/monitoring/errors
+  performance_url: http://dashboard/storage/monitoring/performance
+  errors_url: http://dashboard/storage/monitoring/errors
