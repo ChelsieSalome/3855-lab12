@@ -7,6 +7,8 @@ from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timezone
 import requests
+import os
+
 
 with open('/config/processing_config.yml', 'r') as f:
     app_config = yaml.safe_load(f)
@@ -154,10 +156,11 @@ def init_scheduler():
 
 # CREATE THE APP FIRST (but don't add API yet)
 app = connexion.FlaskApp(__name__, specification_dir='')
-CORS(app.app)
+if os.environ.get("CORS_ALLOW_ALL") == "yes":
+    CORS(app.app)
 
 # NOW ADD THE API AFTER ALL FUNCTIONS ARE DEFINED
-app.add_api("processing_openapi.yaml", strict_validation=True, validate_responses=True)
+app.add_api("processing_openapi.yaml", base_path="/processing", strict_validation=True, validate_responses=True)
 
 
 if __name__ == "__main__":

@@ -11,13 +11,13 @@
  *  - Event headings show the exact index that was fetched.
  */
 
-const VM_IP = "172.169.248.121";
+const VM_IP = "172.169.248.121"
 
-const PROCESSING_STATS_API_URL       = `http://${VM_IP}:8100/stats`;
-const ANALYZER_STATS_API_URL         = `http://${VM_IP}:5005/analyzer/stats`;
-const ANALYZER_PERFORMANCE_API_BASE  = `http://${VM_IP}:5005/analyzer/performance`;
-const ANALYZER_ERROR_API_BASE        = `http://${VM_IP}:5005/analyzer/error`;
-const HEALTH_CHECK_API_URL           = `http://${VM_IP}:8120/healthcheck/health-status`;
+const PROCESSING_STATS_API_URL = `http://${VM_IP}/processing/stats`
+const ANALYZER_STATS_API_URL = `http://${VM_IP}/analyzer/stats`
+const ANALYZER_PERFORMANCE_API_BASE = `http://${VM_IP}/analyzer/performance`
+const ANALYZER_ERROR_API_BASE = `http://${VM_IP}/analyzer/error`
+const HEALTH_CHECK_API_URL = `http://${VM_IP}/healthcheck/health-status`
 
 /* ─────────────────────────────────────────────────────────────────────────── */
 /* Helpers                                                                     */

@@ -133,15 +133,16 @@ def init_scheduler():
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 
-# CORS via Starlette middleware — works correctly with connexion 3.x
-app.add_middleware(
-    CORSMiddleware,
-    position=MiddlewarePosition.BEFORE_EXCEPTION,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# CORS via Starlette middleware — only enabled when CORS_ALLOW_ALL=yes
+if os.environ.get("CORS_ALLOW_ALL") == "yes":
+    app.add_middleware(
+        CORSMiddleware,
+        position=MiddlewarePosition.BEFORE_EXCEPTION,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 app.add_api(
     'openapi.yaml',

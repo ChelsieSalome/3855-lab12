@@ -10,6 +10,8 @@ import random
 import threading
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
+import os
+
 
 # Load configuration
 with open('/config/analyzer_config.yml', 'r') as f:
@@ -246,7 +248,8 @@ def health():
 app = FlaskApp(__name__, specification_dir='')
 
 # Enable CORS
-CORS(app.app)
+if os.environ.get("CORS_ALLOW_ALL") == "yes":
+    CORS(app.app)
 
 # Add API with base path
 app.add_api(

@@ -87,8 +87,6 @@ services:
     build:
       context: receiver
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
     depends_on:
       kafka:
         condition: service_healthy
@@ -104,13 +102,13 @@ services:
     volumes:
       - ./config:/config
       - ./logs:/logs
+    deploy:
+      replicas: 3
 
   processing-service:
     build:
       context: processing
       dockerfile: Dockerfile
-    ports:
-      - "8100:8100"
     depends_on:
       storage-service:
         condition: service_healthy
@@ -132,8 +130,6 @@ services:
     build:
       context: analyzer
       dockerfile: Dockerfile
-    ports:
-      - "5005:5005"
     depends_on:
       kafka:
         condition: service_healthy
@@ -154,8 +150,8 @@ services:
     build:
       context: health-check
       dockerfile: Dockerfile
-    ports:
-      - "8120:8120"
+    environment:
+      CORS_ALLOW_ALL: no
     depends_on:
       receiver-service:
         condition: service_healthy
@@ -186,9 +182,15 @@ services:
     ports:
       - "80:80"
     depends_on:
+      receiver-service:
+        condition: service_healthy
+      storage-service:
+        condition: service_healthy
       processing-service:
         condition: service_healthy
       analyzer-service:
+        condition: service_healthy
+      healthcheck-service:
         condition: service_healthy
     networks:
       - app-network
