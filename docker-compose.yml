@@ -190,7 +190,7 @@ services:
         condition: service_healthy
       analyzer-service:
         condition: service_healthy
-      healthcheck-service:
+      health-check-service:
         condition: service_healthy
     networks:
       - app-network
