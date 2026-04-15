@@ -1,0 +1,16 @@
+version: 1
+
+datastore:
+  user: chelsie
+  password: acit3855-2026
+  hostname: db
+  port: 3306
+  db: monitoring
+
+events:
+  hostname: kafka
+  port: 29092
+  topic: events
+
+service:
+  port: 8091

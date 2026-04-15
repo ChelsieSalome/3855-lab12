@@ -1,0 +1,7 @@
+app:
+  port: 5005
+
+kafka:
+  hostname: kafka
+  port: 29092
+  topic: events

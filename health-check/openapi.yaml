@@ -1,0 +1,52 @@
+openapi: 3.0.0
+
+info:
+  title: Health Check Service API
+  description: Monitors and reports health status of all backend microservices
+  version: "1.0.0"
+
+servers:
+  - url: /healthcheck
+    description: Health Check Service base path
+
+paths:
+  /health-status:
+    get:
+      summary: Get health status of all services
+      operationId: app.get_health_status
+      description: Returns current health status of all backend services
+      
+      responses:
+        '200':
+          description: Successfully retrieved health status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  receiver:
+                    type: string
+                    enum: ["Up", "Down", "Unknown"]
+                    example: "Up"
+                  storage:
+                    type: string
+                    enum: ["Up", "Down", "Unknown"]
+                    example: "Down"
+                  processing:
+                    type: string
+                    enum: ["Up", "Down", "Unknown"]
+                    example: "Up"
+                  analyzer:
+                    type: string
+                    enum: ["Up", "Down", "Unknown"]
+                    example: "Up"
+                  last_update:
+                    type: string
+                    format: date-time
+                    example: "2026-03-22T11:12:23Z"
+        
+        '503':
+          description: Health status not yet available
+        
+        '500':
+          description: Error retrieving health status

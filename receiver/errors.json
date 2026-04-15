@@ -1,0 +1,45 @@
+{
+  "total_count": 20,
+  "recent_batches": [
+    {
+      "client_errors_4xx": 1,
+      "server_errors_5xx": 1,
+      "avg_severity_level": 2.5,
+      "avg_response_time": 675.25,
+      "num_errors": 2,
+      "timestamp": "2026-01-21 13:04:58"
+    },
+    {
+      "client_errors_4xx": 1,
+      "server_errors_5xx": 1,
+      "avg_severity_level": 2.5,
+      "avg_response_time": 675.25,
+      "num_errors": 2,
+      "timestamp": "2026-01-21 13:04:58"
+    },
+    {
+      "client_errors_4xx": 1,
+      "server_errors_5xx": 1,
+      "avg_severity_level": 2.5,
+      "avg_response_time": 675.25,
+      "num_errors": 2,
+      "timestamp": "2026-01-21 13:04:59"
+    },
+    {
+      "client_errors_4xx": 1,
+      "server_errors_5xx": 1,
+      "avg_severity_level": 2.5,
+      "avg_response_time": 675.25,
+      "num_errors": 2,
+      "timestamp": "2026-01-21 13:04:59"
+    },
+    {
+      "client_errors_4xx": 1,
+      "server_errors_5xx": 1,
+      "avg_severity_level": 2.5,
+      "avg_response_time": 675.25,
+      "num_errors": 2,
+      "timestamp": "2026-01-21 13:04:59"
+    }
+  ]
+}

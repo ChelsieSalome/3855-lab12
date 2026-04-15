@@ -1,0 +1,18 @@
+{
+  "receiver": {
+    "status": "Unknown",
+    "last_check": "2026-01-01T00:00:00Z"
+  },
+  "storage": {
+    "status": "Unknown",
+    "last_check": "2026-01-01T00:00:00Z"
+  },
+  "processing": {
+    "status": "Unknown",
+    "last_check": "2026-01-01T00:00:00Z"
+  },
+  "analyzer": {
+    "status": "Unknown",
+    "last_check": "2026-01-01T00:00:00Z"
+  }
+}

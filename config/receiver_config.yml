@@ -1,0 +1,9 @@
+version: 1
+
+events:
+  hostname: kafka
+  port: 29092
+  topic: events
+
+service:
+  port: 8080

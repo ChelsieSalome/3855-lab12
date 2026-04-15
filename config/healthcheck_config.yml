@@ -1,0 +1,41 @@
+app:
+  port: 8120
+
+health_check:
+  # Polling interval: 5 seconds is standard for monitoring
+  # - Fast enough to detect outages
+  # - Not so fast as to overwhelm services
+  interval_seconds: 5
+  
+  # HTTP request timeout: 5 seconds
+  # - Reasonable for services on same network
+  # - Quickly detects hung services
+  timeout_seconds: 15
+
+# Services to monitor
+# Uses Docker service names (from docker-compose)
+services:
+  receiver:
+    hostname: receiver-service
+    port: 8080
+    url: http://receiver-service:8080/health
+  
+  storage:
+    hostname: storage-service
+    port: 8091
+    url: http://storage-service:8091/health
+  
+  processing:
+    hostname: processing-service
+    port: 8100
+    url: http://processing-service:8100/health
+  
+  analyzer:
+    hostname: analyzer-service
+    port: 5005
+    url: http://analyzer-service:5005/analyzer/health
+
+# Data persistence
+datastore:
+  type: json
+  location: /data/healthcheck/health_status.json

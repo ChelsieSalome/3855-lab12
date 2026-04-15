@@ -1,0 +1,142 @@
+openapi: 3.0.3
+info:
+  description: This API receives system monitoring data from enterprise servers to track performance and errors
+  version: "1.0.0"
+  title: Enterprise System Monitoring API
+  contact:
+    email: chelsie.lele@example.com
+
+paths:
+  /monitoring/performance:
+    post:
+      summary: Reports a batch of system performance metrics
+      operationId: app.report_performance_metrics
+      description: Adds a batch of CPU, memory, and disk I/O readings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceMetricsBatch'
+      responses:
+        '201':
+          description: batch successfully received
+        '400':
+          description: 'invalid input, object invalid'
+
+  /monitoring/errors:
+    post:
+      summary: Reports a batch of server error metrics
+      operationId: app.report_error_metrics
+      description: Adds a batch of error codes, severity levels, and average response times
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorMetricsBatch'
+      responses:
+        '201':
+          description: batch successfully received
+        '400':
+          description: 'invalid input, object invalid'
+    
+  /health:
+    get:
+      summary: Health check endpoint
+      operationId: app.health
+      description: Returns service health status
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+
+
+components:
+  schemas:
+    PerformanceMetricsBatch:
+      required:
+        - server_id
+        - reporting_timestamp
+        - metrics
+      properties:
+        server_id:
+          type: string
+          example: "server-123"
+        reporting_timestamp:
+          type: string
+          format: date-time
+          example: "2026-01-14T10:00:00Z"
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/PerformanceMetric'
+      type: object
+
+    PerformanceMetric:
+      required:
+        - cpu
+        - memory
+        - disk_io
+      properties:
+        cpu:
+          type: number
+          example: 72.5
+        memory:
+          type: number
+          example: 64.2
+        disk_io:
+          type: number
+          example: 120.5
+        recorded_timestamp:
+          type: string
+          format: date-time
+          example: "2026-01-14T10:05:00Z"
+      type: object
+
+    ErrorMetricsBatch:
+      required:
+        - server_id
+        - reporting_timestamp
+        - errors
+      properties:
+        server_id:
+          type: string
+          example: "server-456"
+        reporting_timestamp:
+          type: string
+          format: date-time
+          example: "2026-01-14T10:00:00Z"
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMetric'
+      type: object
+
+    ErrorMetric:
+      required:
+        - error_code
+        - severity_level
+        - avg_response_time
+        - error_message
+      properties:
+        error_code:
+          type: string
+          example: "500"
+        severity_level:
+          type: integer
+          description: 1=Low, 5=Critical
+          example: 4
+        avg_response_time:
+          type: number
+          description: average response time in milliseconds
+          example: 1200.5
+        error_message:
+          type: string
+          maxLength: 500
+          example: "Database connection timeout after 30s"
+      type: object

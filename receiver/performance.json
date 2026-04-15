@@ -1,0 +1,40 @@
+{
+  "total_count": 10,
+  "recent_batches": [
+    {
+      "avg_cpu": 77.0,
+      "avg_memory": 65.2,
+      "avg_disk_io": 136.2,
+      "num_readings": 5,
+      "timestamp": "2026-01-21 13:04:31"
+    },
+    {
+      "avg_cpu": 77.0,
+      "avg_memory": 65.2,
+      "avg_disk_io": 136.2,
+      "num_readings": 5,
+      "timestamp": "2026-01-21 13:04:31"
+    },
+    {
+      "avg_cpu": 77.0,
+      "avg_memory": 65.2,
+      "avg_disk_io": 136.2,
+      "num_readings": 5,
+      "timestamp": "2026-01-21 13:04:31"
+    },
+    {
+      "avg_cpu": 77.0,
+      "avg_memory": 65.2,
+      "avg_disk_io": 136.2,
+      "num_readings": 5,
+      "timestamp": "2026-01-21 13:04:31"
+    },
+    {
+      "avg_cpu": 77.0,
+      "avg_memory": 65.2,
+      "avg_disk_io": 136.2,
+      "num_readings": 5,
+      "timestamp": "2026-01-21 13:04:31"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  description: This API provides event statistics
+  version: "1.0.0"
+  title: System Monitoring Statistics API
+
+paths:
+  /stats:
+    get:
+      summary: Gets the current event statistics
+      operationId: app.get_stats
+      description: Returns statistics about system monitoring events
+      responses:
+        '200':
+          description: Successfully returned statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  num_performance_readings:
+                    type: integer
+                    example: 203
+                  max_cpu_reading:
+                    type: number
+                    example: 95.5
+                  num_error_readings:
+                    type: integer
+                    example: 150
+                  max_severity_level:
+                    type: integer
+                    example: 5
+                  last_updated:
+                    type: string
+                    format: date-time
+                    example: "2026-02-11T12:39:16Z"
+        '404':
+          description: Statistics do not exist
+
+  /health:
+    get:
+      summary: Health check endpoint
+      operationId: app.health
+      description: Returns service health status
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
