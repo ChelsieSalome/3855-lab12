@@ -65,6 +65,8 @@ services:
     build:
       context: storage-mysql
       dockerfile: Dockerfile
+    environment:
+      CORS_ALLOW_ALL: no
     depends_on:
       db:
         condition: service_healthy
@@ -73,12 +75,11 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "python", "-c",
-             "import urllib.request; urllib.request.urlopen('http://localhost:8091/health')"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8091/storage/monitoring/performance?start_timestamp=2020-01-01T00:00:00Z&end_timestamp=2020-01-02T00:00:00Z')"]
       interval: 10s
       timeout: 5s
-      retries: 15
-      start_period: 30s
+      retries: 10
+      start_period: 20s
     volumes:
       - ./config:/config
       - ./logs:/logs
@@ -87,18 +88,13 @@ services:
     build:
       context: receiver
       dockerfile: Dockerfile
+    environment:
+      CORS_ALLOW_ALL: no
     depends_on:
       kafka:
         condition: service_healthy
     networks:
       - app-network
-    healthcheck:
-      test: ["CMD", "python", "-c",
-             "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 20s
     volumes:
       - ./config:/config
       - ./logs:/logs
@@ -109,18 +105,13 @@ services:
     build:
       context: processing
       dockerfile: Dockerfile
+    environment:
+      CORS_ALLOW_ALL: no
     depends_on:
       storage-service:
         condition: service_healthy
     networks:
       - app-network
-    healthcheck:
-      test: ["CMD", "python", "-c",
-             "import urllib.request; urllib.request.urlopen('http://localhost:8100/health')"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 20s
     volumes:
       - ./config:/config
       - ./logs:/logs
@@ -130,18 +121,13 @@ services:
     build:
       context: analyzer
       dockerfile: Dockerfile
+    environment:
+      CORS_ALLOW_ALL: no
     depends_on:
       kafka:
         condition: service_healthy
     networks:
       - app-network
-    healthcheck:
-      test: ["CMD", "python", "-c",
-             "import urllib.request; urllib.request.urlopen('http://localhost:5005/analyzer/health')"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 20s
     volumes:
       - ./config:/config
       - ./logs:/logs
@@ -150,17 +136,11 @@ services:
     build:
       context: health-check
       dockerfile: Dockerfile
-    environment:
-      CORS_ALLOW_ALL: no
     depends_on:
-      receiver-service:
-        condition: service_healthy
-      storage-service:
-        condition: service_healthy
-      processing-service:
-        condition: service_healthy
-      analyzer-service:
-        condition: service_healthy
+      - receiver-service
+      - storage-service
+      - processing-service
+      - analyzer-service
     networks:
       - app-network
     volumes:
@@ -168,12 +148,11 @@ services:
       - ./logs:/logs
       - ./data/healthcheck:/data
     healthcheck:
-      test: ["CMD", "python", "-c",
-             "import urllib.request; urllib.request.urlopen('http://localhost:8120/healthcheck/health-status')"]
+      test: ["CMD", "curl", "-f", "http://localhost:8120/healthcheck/health-status"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 15s
+      start_period: 10s
 
   dashboard:
     build:
@@ -182,16 +161,11 @@ services:
     ports:
       - "80:80"
     depends_on:
-      receiver-service:
-        condition: service_healthy
-      storage-service:
-        condition: service_healthy
-      processing-service:
-        condition: service_healthy
-      analyzer-service:
-        condition: service_healthy
-      health-check-service:
-        condition: service_healthy
+      - receiver-service
+      - storage-service
+      - processing-service
+      - analyzer-service
+      - health-check-service
     networks:
       - app-network
     healthcheck:
