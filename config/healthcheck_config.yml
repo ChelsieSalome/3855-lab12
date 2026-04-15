@@ -3,7 +3,7 @@ app:
 
 health_check:
   interval_seconds: 5
-  timeout_seconds: 15
+  timeout_seconds: 45
 
 services:
   receiver:
